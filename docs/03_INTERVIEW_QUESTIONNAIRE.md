@@ -1,42 +1,41 @@
-# 03. User Interview Questionnaire
+# 03. User Interview Questionnaire (Concise 15-Minute Protocol)
 
-> **Target Profile:** Final-year university students and recent graduates (0–2 years experience) who are actively applying or have recently applied to jobs.  
-> **Duration:** ~20 minutes  
-> **Tone:** Open-ended, non-leading, focused on past actual behaviour rather than hypothetical preferences ("What did you do?" instead of "Would you like?").
-
----
-
-## Part 1: Warm-up & Current Context (3 mins)
-1. "Could you tell me a little bit about your current academic or work situation and what kinds of roles you are targeting?"
-2. "How would you describe your overall job search activity over the last 1–3 months? (e.g., number of applications submitted per week/month)"
+> **Target:** 12–15 Final-year students or recent graduates (0–2 years experience).  
+> **Target Duration:** 15 minutes.  
+> **Interviewer Mindset:** Curious, neutral, non-defensive. Dig into specific real-life stories ("Can you tell me about the last time that happened?").
 
 ---
 
-## Part 2: Current Tracking Workflow (7 mins)
-3. "Walk me through what happens right after you click 'Submit' on a job application. Where does that information go, if anywhere?"
-4. "What tool or system are you currently using to keep track of where you've applied? (e.g., Google Sheets, Excel, Notion, bookmarks, mental notes, email inbox)"
-   - *Follow-up:* "Could you share your screen or describe the columns/fields you track?"
-5. "When did you last update this system? What prompted that update?"
-6. "Have you ever abandoned or fallen behind on your tracking system? If yes, what caused you to stop?"
+## Section A: Profile & Volume Context (2 mins)
+1. "What role(s) are you currently targeting, and what is your current graduation or job situation?"
+2. "Roughly how many applications have you submitted over the last 1–3 months?"
+   - *Probe if vague:* Was it under 10, around 20–50, or over 100?
 
 ---
 
-## Part 3: Deadlines, Stages & Follow-ups (7 mins)
-7. "Tell me about a time you received an invitation to take an online assessment (OA) or schedule an interview. How did you track that deadline?"
-   - *Follow-up:* "Have you ever missed or nearly missed a deadline? What happened?"
-8. "When you receive a recruiter outreach or phone screen invite, how easily can you recall the exact role, job description, or company details?"
-9. "Do you ever follow up with recruiters or hiring managers after applying or interviewing? How do you decide when to do that?"
+## Section B: Current Tracking Reality (5 mins)
+3. "Walk me through what you physically do right after submitting an application. Where does that record go?"
+   - *Probe:* Google Sheet? Notion? Notes app? Bookmarks? Just keep the confirmation email?
+4. "How is that system working for you? Have you ever fallen behind on updating it or abandoned a tracker?"
+   - *Probe:* Why did you stop? (Too many fields? Forgetting? Rejection burnout? Too clunky on mobile?)
+5. "If you use a tracker, which 3–4 columns or pieces of information do you actually look at or update most frequently?"
 
 ---
 
-## Part 4: Needs & Friction Analysis (3 mins)
-10. "If you could eliminate one frustrating or time-consuming part of managing your applications, what would it be?"
-11. "When you check on your job search progress, what numbers or questions do you care about the most? (e.g., response rates, upcoming interviews, how many active applications you have)"
+## Section C: Assessments, Interviews & Deadlines (5 mins)
+6. "When a company sends you an online assessment (HackerRank, test link) or an interview scheduling link with a deadline, how do you track that date?"
+   - *Probe:* Have you ever missed a deadline or had a close call? What happened?
+7. "When a recruiter emails or calls you unexpectedly about an application from 3 weeks ago, how easily can you remember what company, role, or salary details were involved?"
+8. "Do you ever follow up on pending applications or post-interview rounds? If yes, how do you decide when to do that?"
 
 ---
 
-## Note-Taking Guidelines for Interviewer
-- **Rule 1:** Record direct quotes whenever possible.
-- **Rule 2:** Dig into the "why" when a participant mentions a tool or habit.
-- **Rule 3:** Do not pitch CareerFlow during the interview. Listen to their current reality.
-- **Rule 4:** Populate `docs/05_RESEARCH_FINDINGS.md` strictly from real participant notes.
+## Section D: Existing Tools & Friction (3 mins)
+9. "Have you tried any dedicated job tracking tools (like Teal, Huntr, Simplify, or Notion templates)?"
+   - *Probe:* What did you like, and why did you keep or stop using them?
+10. "If you could fix the single most annoying thing about keeping your job hunt organized, what would it be?"
+
+---
+
+## Wrap-up
+- *"Thank you so much! May I reach back out if I have a quick follow-up question when analyzing common patterns?"*

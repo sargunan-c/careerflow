@@ -1,52 +1,47 @@
-# 01. Problem Statement
+# 01. Problem Statement & Assumption Audit
 
-> **Status:** Draft / Pending User Approval (Phase 4)  
-> **Target Audience:** Final-year university students & recent graduates (0–2 years experience)
-
----
-
-## 1. Context & Background
-Final-year university students and recent graduates enter a high-volume, fragmented recruitment landscape. A single candidate often submits dozens—sometimes hundreds—of applications across disparate channels (company career pages, LinkedIn, university job boards, referral links). Each company maintains different hiring stages, assessment platforms (HackerRank, HireVue, OA deadlines), and interview timelines.
+> **Document Status:** Working Hypothesis (Unapproved)  
+> **Target Segment Under Investigation:** Final-year university students & recent graduates (0–2 years experience)  
+> **Rule:** Every claim in this document is treated as an unvalidated hypothesis until corroborated by real interview data in `05_RESEARCH_FINDINGS.md`.
 
 ---
 
-## 2. Core Problem Definition
-Currently, fresh graduates struggle with **operational friction, missed deadlines, and anxiety caused by lack of visibility into their job search pipeline**.
+## 1. High-Level Hypothesis
 
-Because entry-level hiring requires applying to multiple roles concurrently, candidates face cognitive overload when managing:
-1. **Critical Date Slippage:** Missing tight 48–72 hour deadlines for online assessments (OAs) or scheduling calls.
-2. **Context Fragmentation:** Forgetting which company/role/salary/job description an invitation or phone screen corresponds to.
-3. **Follow-up Blind Spots:** Lacking clear visibility into when to follow up on pending applications or post-interview stages.
-4. **Tool Fatigue:** Existing solutions (spreadsheets or complex enterprise project management tools) require excessive manual maintenance, leading to abandoned tracking.
+Early-career job seekers face an overwhelming volume of simultaneous job applications across disconnected platforms. Without a dedicated, friction-free tracking system, they experience operational stress, context loss during recruiter interactions, and risk missing time-sensitive assessment deadlines.
 
 ---
 
-## 3. Explicit Distinction: Verified Facts vs. Working Assumptions
+## 2. Granular Assumption Audit
 
-| Item | Status | Description |
-|---|---|---|
-| Candidates apply to many roles simultaneously across multiple platforms | **Working Assumption** | To be validated in user interviews (target: avg applications/week). |
-| Online assessment deadlines are frequently missed due to poor reminders | **Working Assumption** | Needs confirmation through student interview data. |
-| Existing spreadsheets are abandoned due to setup friction and lack of mobile utility | **Working Assumption** | Common industry hypothesis; requires direct validation. |
-| Students prefer a lightweight, purpose-built dashboard over Notion/Excel | **Working Assumption** | Will be tested against competitor feedback. |
-| Supabase Auth + RLS provides complete user isolation required for job data privacy | **Verified Technical Fact** | Supabase Row Level Security enforces tenant isolation at the database layer. |
+Below is the complete breakdown of every assumption embedded in our current problem framing. Each must be tested against our 12–15 user interviews:
 
----
-
-## 4. Value Proposition (Draft)
-> **For** fresh graduates and final-year students managing active recruitment processes,  
-> **CareerFlow** is a streamlined, privacy-first job application tracking dashboard  
-> **that** centralises pipeline stages, upcoming assessment/interview deadlines, and follow-up reminders.  
-> **Unlike** bloated enterprise project management tools or tedious manual spreadsheets,  
-> **CareerFlow** offers an effortless, structured workflow tailored to the specific cadence of entry-level hiring without clutter.
+| Category | # | Embedded Assumption | Why It Is Unvalidated | Risk Level if Wrong |
+|---|---|---|---|---|
+| **Target User** | A1 | Early-career applicants (0–2 yrs) apply in high volumes (30–100+ roles) rather than targeting 3–5 high-fit roles. | They may apply to very few select campus roles, making a tracker redundant. | **High** |
+| **Pain Point** | A2 | Missing Online Assessment (OA) / test deadlines (48–72h) is a frequent, painful occurrence. | Applicants might complete OAs immediately upon receipt or use calendar reminders. | **High** |
+| **Pain Point** | A3 | Context fragmentation (forgetting job description, company details, salary when contacted) causes real distress. | Most candidates might quickly search their email inbox without issue. | **Medium** |
+| **Pain Point** | A4 | Fresh grads actively send follow-up emails and need follow-up reminders. | Most entry-level applications go into automated ATS black holes where follow-ups are futile or ignored. | **High** |
+| **Behavior** | A5 | Candidates abandon spreadsheets/Notion because of manual maintenance friction and poor mobile input. | Abandonment might be caused by emotional fatigue/rejection burnout, not spreadsheet UI. | **High** |
+| **Behavior** | A6 | Candidates want to track applications on mobile devices on-the-go. | Job applications and resume tailoring might be strictly a desktop-only activity. | **Medium** |
+| **Solution Fit** | A7 | A 7-stage pipeline (`Saved`, `Applied`, `Assessment`, `Interview`, `Offer`, `Rejected`, `Withdrawn`) accurately matches their mental model. | Their actual stages might be binary (Applied vs. Rejected/Ignored) or involve sub-stages (OA1, OA2, Technical, HR). | **Medium** |
+| **Solution Fit** | A8 | Candidates will adopt an independent web app instead of staying in their existing tools (Notion, Google Sheets, email). | Switching costs may be high if manual data entry is still required. | **Critical** |
 
 ---
 
-## 5. Non-Goals (Out of Scope for MVP)
-To maintain velocity, high product quality, and zero bloat, the following are strictly excluded:
-- Automated job scraping / autofill extensions.
+## 3. Working Value Proposition (Hypothesis Only)
+
+> **"CareerFlow helps fresh graduates organize their active job hunt into a single, high-clarity dashboard so they never miss an assessment deadline or lose context on an interview, without the bloat, paywalls, or privacy concerns of enterprise trackers."**
+
+*This value proposition will not be locked until validated by user evidence in Phase 4.*
+
+---
+
+## 4. Strict Non-Goals for MVP
+Regardless of discovery outcomes, the following remain strictly out of scope:
+- Automated web scraping / browser autofill extensions.
 - AI resume / cover letter generators.
-- AI chatbots.
-- Social sharing or networking features.
-- Inbound email sync / Gmail parsing.
-- Monetisation / paid tier gating.
+- AI chatbots / automated writing assistants.
+- Social networks / community feeds.
+- Complex mailbox API syncing (OAuth Gmail read/write access).
+- Paywalls, subscriptions, or credit card processing.

@@ -19,6 +19,7 @@ careerflow/
 │   ├── 01_PROBLEM_STATEMENT.md
 │   ├── 02_ASSUMPTIONS_AND_RESEARCH_PLAN.md
 │   ├── 03_INTERVIEW_QUESTIONNAIRE.md
+│   ├── 03b_INTERVIEW_NOTES_TEMPLATE.md
 │   ├── 04_COMPETITOR_ANALYSIS.md
 │   ├── 05_RESEARCH_FINDINGS.md
 │   ├── 06_PRD.md                             (Phase 5)
@@ -46,3 +47,4 @@ careerflow/
 - [ ] **Phase 9: Comprehensive QA & End-to-End Testing**
 - [ ] **Phase 10: Deployment & Verification**
 - [ ] **Phase 11: Final Case Study & Interview Defense Prep**
+

@@ -1,48 +1,76 @@
-# 02. Assumptions & User Research Plan
+# 02. Practical Beginner's User Research Plan
 
-> **Objective:** Systematically test core hypotheses regarding student and recent graduate job application habits before committing to detailed interaction patterns.
-
----
-
-## 1. Core Assumptions Framework
-
-### A. Problem-Space Assumptions
-1. **Application Volume:** Fresh graduates submit between 20 to 100+ applications during their peak hiring season.
-2. **Key Pain Point:** The primary stressor is tracking active stages (assessments, interviews, take-homes) rather than simply storing bookmarks of jobs.
-3. **Dropout Rate from Tracking:** Candidates often start a spreadsheet or Notion page, but stop updating it within 2–3 weeks because adding/updating fields on mobile or during quick email triage is too high-friction.
-4. **Deadline Criticality:** Missing an online assessment (OA) window or technical take-home test is a common failure mode with irreversible career consequences.
-
-### B. Solution-Space Assumptions
-1. **Stage Model:** A 7-stage lifecycle (`Saved` → `Applied` → `Assessment` → `Interview` → `Offer` → `Rejected` → `Withdrawn`) accommodates 95%+ of early-career recruitment journeys.
-2. **Reminders & Visibility:** Surfacing explicit "Upcoming Deadlines" and "Pending Follow-ups" directly on the dashboard homepage removes the need for complex calendar sync in the MVP.
-3. **Data Ownership:** Candidates want complete data isolation, privacy, and an easy CSV export to preserve ownership of their application history.
+> **Objective:** Validate or invalidate core hypotheses (A1–A8) by gathering qualitative evidence from 12–15 active job seekers or recent graduates, with zero financial budget and zero overengineering.
 
 ---
 
-## 2. Research Methodology & Execution Plan
-
-### Target Participants
-- **Segment 1:** Final-year undergraduate/master's students actively participating in campus placements or off-campus recruitment (n = 3–5).
-- **Segment 2:** Recent graduates (graduated within past 24 months) who recently completed a job search (n = 3–5).
-
-### Research Format
-- 20-minute semi-structured qualitative interviews (via video or in-person).
-- Observational walkthrough: Asking the participant to show or describe their existing tracker (spreadsheet, notes app, or memory).
-
-### Key Learning Goals
-1. What exact tool(s) do they currently use to track applications?
-2. Where does their tracking system break down?
-3. How do they track time-sensitive events (assessments, interview calls, post-interview follow-ups)?
-4. What are the must-have metadata fields they actually care about versus fields they never fill in?
-5. How frequently do they update their job data from mobile versus desktop?
+## 1. Why 12–15 Participants?
+In user research, qualitative pattern saturation typically occurs between 8 to 12 interviews. By targeting **12–15 participants**, you will see recurring themes repeat 3–4 times while keeping the note-taking and synthesis workload manageable for a single product manager.
 
 ---
 
-## 3. Decision Matrix based on Research Findings
+## 2. Participant Profile & Recruitment Playbook
 
-| If research reveals... | Product adjustment... |
-|---|---|
-| Users only care about 4-5 key fields | Strip down application entry modal to minimize friction; move optional details behind an expandable section. |
-| Users don't do follow-ups or don't know when to follow up | Provide suggested follow-up intervals (e.g., standard 7-day rule) as a helpful default. |
-| Desktop is 90%+ of their usage during application batches | Ensure high-density keyboard-friendly desktop table while maintaining clean mobile read access. |
-| Spreadsheets are abandoned specifically because of manual status changes | Make status updates 1-click actions directly from dashboard/list. |
+### Target Criteria
+- Final-year university students actively applying for jobs/internships, **OR**
+- Recent graduates (0–2 years out of university) who applied to jobs within the last 6 months.
+
+### How to Recruit 12–15 Participants for Free (Zero Budget)
+As a beginner PM, you don't need paid testing platforms. Use these 4 channels:
+
+1. **Direct University & Alumni Peers (Target: 4–6 participants):**
+   - Message classmates, course group chats, or recent alumni on WhatsApp, Discord, or Telegram.
+2. **LinkedIn 1-on-1 Outreach (Target: 3–5 participants):**
+   - Filter by your university + "Actively Seeking Opportunities" or "Incoming Graduate".
+   - *Message script:*
+     > *"Hi [Name], I'm working on a project focused on the graduate job search process. I’m speaking with a few recent grads to understand how people currently manage multiple applications and deadlines. Would you be open to a quick 12–15 minute chat this week? No sales pitch whatsoever—just learning about your actual experience!"*
+3. **Student Communities & Career Discords/Subreddits (Target: 3–4 participants):**
+   - Post in student/developer communities (e.g., college Discord servers, career channels, r/csMajors, r/jobs).
+   - Offer to share the synthesized competitor breakdown or application tracking tips in return for their time.
+
+---
+
+## 3. The Beginner PM's Interview Rules (The "Mom Test" Method)
+
+To avoid getting polite, misleading answers, follow these 3 golden rules during every interview:
+
+1. **Talk about past actual behavior, never hypothetical futures:**
+   - ❌ *Wrong:* "Would you use an app that reminds you of assessment deadlines?" *(Everyone says yes to be nice, but won't actually use it).*
+   - ✅ *Right:* "When did you last receive an assessment deadline? Walk me through what you actually did."
+2. **Listen 80%, talk 20%:**
+   - Ask the question and stay completely silent. Let the participant fill the silence.
+3. **Never pitch CareerFlow:**
+   - Do not mention the tech stack, features, or design. You are an investigator, not a salesperson.
+
+---
+
+## 4. Operational Workflow (Step-by-Step)
+
+```text
+[Step 1: Setup]
+Create a copy of docs/03b_INTERVIEW_NOTES_TEMPLATE.md for each interviewee (P01 to P15).
+       │
+       ▼
+[Step 2: Conduct]
+Run a 15-minute video call (Zoom/Meet) or voice call using docs/03_INTERVIEW_QUESTIONNAIRE.md.
+Type bullet points directly into the template during or immediately after the call.
+       │
+       ▼
+[Step 3: Log Quotes]
+Capture 2–3 direct verbatim quotes per interview capturing frustration, habits, or confusion.
+       │
+       ▼
+[Step 4: Synthesize in Phase 4]
+Once all 12–15 are logged, we will jointly identify recurring patterns in docs/05_RESEARCH_FINDINGS.md.
+```
+
+---
+
+## 5. Success/Failure Signals for Hypotheses
+
+| Signal | Validates Assumption (Green Light) | Invalidates Assumption (Pivot Required) |
+|---|---|---|
+| **Application Volume** | ≥ 70% applied to 25+ roles simultaneously. | Most applied to < 10 roles via university placement cell. |
+| **Tracking System** | ≥ 60% tried a tracker (Sheets/Notion/Notes) and abandoned it. | Most happily stick to their spreadsheet without issue. |
+| **Deadline Anxiety** | ≥ 50% reported missing or stressing over an assessment/interview date. | Deadlines were easily handled via calendar/email notifications. |
+| **Follow-Up Habit** | ≥ 50% actively follow up and want a prompt. | Most consider following up pointless or forbidden by company policies. |
