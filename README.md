@@ -66,7 +66,8 @@ careerflow/
 │   ├── 07_USER_STORIES_AND_AC.md        # Gherkin-syntax User Stories & Acceptance Criteria
 │   ├── 08_FEATURE_PRIORITISATION.md     # MoSCoW & RICE scoring framework
 │   ├── 09_TECHNICAL_ARCHITECTURE.md     # Full-stack architectural specification & mermaid diagram
-│   └── 11_TESTING_REPORT.md             # Automated test report & QA checklist
+│   ├── 11_TESTING_REPORT.md             # Automated test report & QA checklist
+│   └── 12_PRODUCT_CASE_STUDY.md         # Comprehensive product case study for portfolio
 ├── src/
 │   ├── app/
 │   │   ├── (auth)/
