@@ -97,3 +97,4 @@ CREATE TRIGGER set_applications_updated_at
     BEFORE UPDATE ON public.applications
     FOR EACH ROW
     EXECUTE FUNCTION public.handle_updated_at();
+

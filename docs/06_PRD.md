@@ -86,3 +86,4 @@ Early-career job applicants simultaneously manage 30–100+ job applications acr
 - AI resume/cover letter writing (feature bloat that detracts from execution clarity).
 - Invasive browser extensions (privacy risk).
 - Paywalls, subscriptions, or Stripe billing.
+

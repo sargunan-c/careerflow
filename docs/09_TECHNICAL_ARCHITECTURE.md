@@ -60,3 +60,4 @@ flowchart TD
   - `idx_applications_interview_date` WHERE `interview_date IS NOT NULL`
   - `idx_applications_follow_up_date` WHERE `follow_up_date IS NOT NULL`
 - This ensures $O(\log n)$ deadline sorting even when candidate volume scales.
+

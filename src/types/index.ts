@@ -56,3 +56,4 @@ export interface ApplicationFilters {
   sortBy: "application_date" | "company" | "status" | "assessment_date" | "interview_date";
   sortOrder: "asc" | "desc";
 }
+

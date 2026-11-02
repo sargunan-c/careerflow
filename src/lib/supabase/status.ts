@@ -22,3 +22,4 @@ export function isSupabaseConfigured(): boolean {
 
   return true;
 }
+

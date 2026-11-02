@@ -77,3 +77,4 @@
 - **AC 6.1:** Supabase Row Level Security (RLS) is enabled on `public.applications`.
 - **AC 6.2:** Queries use `auth.uid() = user_id` for SELECT, INSERT, UPDATE, and DELETE policies.
 - **AC 6.3:** Attempting to query or mutate another user's application returns empty or unauthorized errors at the database layer.
+

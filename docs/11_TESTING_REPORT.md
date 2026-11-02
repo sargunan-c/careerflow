@@ -49,3 +49,4 @@
 - [x] **No Hardcoded Secrets:** Zero API keys, passwords, or service-role keys are checked into source control.
 - [x] **Graceful Degradation:** When backend credentials are unconfigured, CareerFlow displays an honest setup banner instead of crashing or serving fake mock records.
 - [x] **Mobile Responsiveness:** Verified high-density table collapses into responsive touch cards on viewports $< 768\text{px}$.
+

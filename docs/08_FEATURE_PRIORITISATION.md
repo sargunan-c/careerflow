@@ -42,3 +42,4 @@ Formula: $\text{RICE Score} = \frac{\text{Reach} \times \text{Impact} \times \te
 | **Follow-up Reminders** | 6 | 1.5 (Medium) | 70% | 1 | **63** | **P1 (MVP Added)** |
 | *AI Resume Tailoring* | 6 | 1.0 (Low) | 40% | 10 | **2.4** | **Cut (Out of Scope)** |
 | *Automated Scraper* | 8 | 1.5 (Medium) | 30% | 12 | **3.0** | **Cut (Out of Scope)** |
+

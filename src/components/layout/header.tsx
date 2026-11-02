@@ -101,3 +101,4 @@ export function Header({ onOpenAddModal }: HeaderProps) {
     </header>
   );
 }
+

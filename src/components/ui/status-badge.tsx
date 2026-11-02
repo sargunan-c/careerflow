@@ -82,3 +82,4 @@ export function StatusBadge({ status, className, size = "default" }: StatusBadge
     </span>
   );
 }
+

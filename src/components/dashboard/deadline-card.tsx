@@ -112,3 +112,4 @@ export function DeadlineCard({ deadlines, followUps }: DeadlineCardProps) {
     </div>
   );
 }
+
