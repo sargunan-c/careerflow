@@ -43,7 +43,34 @@
 
 ---
 
-## 3. Security & Multi-Tenancy QA Checklist
+## 3. Live Supabase Multi-User E2E QA Results (`scripts/final-live-qa.mjs`)
+
+Executed against the live Supabase project using two distinct authenticated user accounts (User Alpha and User Beta):
+
+| Phase | Test Case | Target Checked | Result | Notes |
+|---|---|---|---|---|
+| **Phase 1: Auth** | `LIVE-AUTH-01` | User Alpha Sign-up & Session Token Issuance | **PASS** | Session JWT issued and verified |
+| **Phase 2: CRUD** | `LIVE-CRUD-01` | Batch Application Creation | **PASS** | Inserted 3 distinct records (Stripe, Datadog, Google) |
+| **Phase 2: CRUD** | `LIVE-CRUD-02` | Read Applications Pipeline | **PASS** | Successfully selected 3/3 records |
+| **Phase 2: CRUD** | `LIVE-CRUD-03` | Update Status (`Applied` → `Offer`) | **PASS** | Verified record status mutation |
+| **Phase 2: CRUD** | `LIVE-CRUD-04` | Delete Application | **PASS** | Deleted Google application; 2 records remain |
+| **Phase 3: Metrics** | `LIVE-METRIC-01` | Total Applications Count | **PASS** | Count = 2 |
+| **Phase 3: Metrics** | `LIVE-METRIC-02` | Active Pipeline Calculation | **PASS** | Active = 2 (non-rejected/non-withdrawn) |
+| **Phase 3: Metrics** | `LIVE-METRIC-03` | Offers Count Metric | **PASS** | Offers = 1 |
+| **Phase 3: Metrics** | `LIVE-METRIC-04` | Assessment Radar Metric | **PASS** | Assessments = 1 |
+| **Phase 4: Search** | `LIVE-SEARCH-01` | Text Search Functionality | **PASS** | Filtered by "Stripe" accurately |
+| **Phase 4: Filter** | `LIVE-FILTER-01` | Status Filter Pills | **PASS** | Filtered by "Assessment" accurately |
+| **Phase 4: CSV** | `LIVE-CSV-01` | RFC-4180 Format & Export Structure | **PASS** | Standard headers, quotes, and commas verified |
+| **Phase 5: Session** | `LIVE-SESS-01` | Data Persistence Across Re-Authentication | **PASS** | Logout & re-login recovered all 2 records |
+| **Phase 6: Multi-Tenant** | `LIVE-RLS-01` | Multi-User Read Isolation | **PASS** | User Beta queries return 0 records (User Alpha records invisible) |
+| **Phase 6: Multi-Tenant** | `LIVE-RLS-02` | Direct UUID Query Isolation | **PASS** | Querying User Alpha's UUID directly as User Beta returns 0 rows |
+| **Phase 6: Multi-Tenant** | `LIVE-RLS-03` | Cross-Tenant UPDATE Attack Blocked | **PASS** | Mutation rejected by PostgreSQL RLS engine |
+| **Phase 6: Multi-Tenant** | `LIVE-RLS-04` | User Beta Independent Dataset | **PASS** | User Beta creates Amazon; only sees Amazon (Count = 1) |
+| **Phase 6: Multi-Tenant** | `LIVE-RLS-05` | User Alpha Dataset Integrity | **PASS** | User Alpha only sees Stripe & Datadog (Count = 2, no Amazon) |
+
+---
+
+## 4. Security & Multi-Tenancy QA Checklist
 
 - [x] **Database Isolation:** Supabase RLS is configured for `SELECT`, `INSERT`, `UPDATE`, and `DELETE` on `public.applications`.
 - [x] **No Hardcoded Secrets:** Zero API keys, passwords, or service-role keys are checked into source control.

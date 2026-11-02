@@ -96,3 +96,4 @@ To deliver a working MVP without scope creep, strict scope boundaries were defin
 1. **Recruitment:** Conduct 12–15 semi-structured 15-minute interviews with university seniors and recent graduates using `docs/03_INTERVIEW_QUESTIONNAIRE.md`.
 2. **Evidence Logging:** Populate `docs/05_RESEARCH_FINDINGS.md` with raw participant observations and direct quotes.
 3. **Iterative Refinement:** Update the product roadmap based on whether hypotheses A1–A8 are validated or invalidated.
+
