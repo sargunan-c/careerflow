@@ -45,3 +45,4 @@
 ### Core Insight & PM Takeaway (1–2 sentences)
 - *What is this participant's single biggest unresolved friction point?*
 ```
+
