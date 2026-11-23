@@ -33,9 +33,16 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  let user = null;
+  try {
+    const {
+      data: { user: authUser },
+    } = await supabase.auth.getUser();
+    user = authUser;
+  } catch (err) {
+    console.error("Middleware Supabase auth check failed:", err);
+    user = null;
+  }
 
   const isAuthPage =
     request.nextUrl.pathname.startsWith("/login") ||
