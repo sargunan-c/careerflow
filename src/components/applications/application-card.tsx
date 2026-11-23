@@ -51,6 +51,11 @@ export function ApplicationCard({
 
       {/* Meta tags */}
       <div className="flex flex-wrap gap-2 text-xs text-muted-foreground pt-1">
+        {app.source && (
+          <span className="inline-flex items-center gap-1 bg-primary/10 text-primary font-medium px-2 py-0.5 rounded">
+            {app.source}
+          </span>
+        )}
         {app.location && (
           <span className="inline-flex items-center gap-1 bg-muted/60 px-2 py-0.5 rounded">
             <MapPin className="h-3 w-3" />
@@ -110,11 +115,10 @@ export function ApplicationCard({
             className="h-8 px-2 text-xs text-destructive hover:bg-destructive/10"
             onClick={() => onDelete(app)}
           >
-            <Trash2 className="h-3.5 w-3.5" />
+            <Trash2 className="h-4 w-4" />
           </Button>
         </div>
       </div>
     </div>
   );
 }
-

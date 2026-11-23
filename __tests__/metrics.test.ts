@@ -18,6 +18,7 @@ describe("Dashboard Metrics Calculation", () => {
       assessment_date: null,
       interview_date: null,
       follow_up_date: "2026-10-15",
+      source: "LinkedIn",
       notes: null,
       created_at: "2026-10-01T00:00:00Z",
       updated_at: "2026-10-01T00:00:00Z",
@@ -36,6 +37,7 @@ describe("Dashboard Metrics Calculation", () => {
       assessment_date: null,
       interview_date: "2026-11-12T15:00:00Z",
       follow_up_date: null,
+      source: "Referral",
       notes: "System design round",
       created_at: "2026-10-05T00:00:00Z",
       updated_at: "2026-10-05T00:00:00Z",
@@ -54,6 +56,7 @@ describe("Dashboard Metrics Calculation", () => {
       assessment_date: null,
       interview_date: null,
       follow_up_date: null,
+      source: "LinkedIn",
       notes: "Received written offer",
       created_at: "2026-09-15T00:00:00Z",
       updated_at: "2026-09-15T00:00:00Z",
@@ -72,6 +75,7 @@ describe("Dashboard Metrics Calculation", () => {
       assessment_date: null,
       interview_date: null,
       follow_up_date: null,
+      source: "Company Career Site",
       notes: "Position closed",
       created_at: "2026-09-20T00:00:00Z",
       updated_at: "2026-09-20T00:00:00Z",
@@ -90,6 +94,7 @@ describe("Dashboard Metrics Calculation", () => {
       assessment_date: null,
       interview_date: null,
       follow_up_date: null,
+      source: "Campus Placement",
       notes: "Accepted another role",
       created_at: "2026-09-25T00:00:00Z",
       updated_at: "2026-09-25T00:00:00Z",
@@ -104,6 +109,17 @@ describe("Dashboard Metrics Calculation", () => {
     expect(metrics.active).toBe(3);
     expect(metrics.interviews).toBe(1);
     expect(metrics.offers).toBe(1);
+  });
+
+  it("calculates conversion rates accurately", () => {
+    const metrics = calculateMetrics(mockApplications);
+
+    // 1 interview out of 5 = 20.0%
+    expect(metrics.interviewConversionRate).toBe(20);
+    // 1 rejected out of 5 = 20.0%
+    expect(metrics.rejectionRate).toBe(20);
+    // 1 offer out of 5 = 20.0%
+    expect(metrics.offerConversionRate).toBe(20);
   });
 
   it("calculates status distribution accurately with percentages", () => {
@@ -124,6 +140,21 @@ describe("Dashboard Metrics Calculation", () => {
     expect(withdrawnStat?.count).toBe(1);
   });
 
+  it("calculates activity over time and source distribution", () => {
+    const metrics = calculateMetrics(mockApplications);
+
+    // Total 5 applications: 3 in Sep 2026, 2 in Oct 2026
+    expect(metrics.activityOverTime).toHaveLength(2);
+    const totalVolume = metrics.activityOverTime.reduce((sum, item) => sum + item.count, 0);
+    expect(totalVolume).toBe(5);
+
+    // Source breakdown: 2 LinkedIn, 1 Referral, 1 Company Career Site, 1 Campus Placement
+    expect(metrics.sourceBreakdown.length).toBeGreaterThanOrEqual(4);
+    const linkedInSource = metrics.sourceBreakdown.find((s) => s.source === "LinkedIn");
+    expect(linkedInSource?.count).toBe(2);
+    expect(linkedInSource?.percentage).toBe(40);
+  });
+
   it("handles zero applications gracefully without division by zero", () => {
     const emptyMetrics = calculateMetrics([]);
 
@@ -131,6 +162,11 @@ describe("Dashboard Metrics Calculation", () => {
     expect(emptyMetrics.active).toBe(0);
     expect(emptyMetrics.interviews).toBe(0);
     expect(emptyMetrics.offers).toBe(0);
+    expect(emptyMetrics.interviewConversionRate).toBe(0);
+    expect(emptyMetrics.rejectionRate).toBe(0);
+    expect(emptyMetrics.offerConversionRate).toBe(0);
+    expect(emptyMetrics.activityOverTime).toHaveLength(0);
+    expect(emptyMetrics.sourceBreakdown).toHaveLength(0);
     expect(emptyMetrics.upcomingDeadlines).toHaveLength(0);
     expect(emptyMetrics.pendingFollowUps).toHaveLength(0);
 
@@ -140,4 +176,3 @@ describe("Dashboard Metrics Calculation", () => {
     });
   });
 });
-

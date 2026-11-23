@@ -26,7 +26,7 @@ import {
   Briefcase,
   FileText,
   Loader2,
-  CheckCircle2,
+  Share2,
 } from "lucide-react";
 
 export default function ApplicationDetailsPage({
@@ -118,6 +118,7 @@ export default function ApplicationDetailsPage({
           assessment_date: data.assessment_date,
           interview_date: data.interview_date,
           follow_up_date: data.follow_up_date,
+          source: data.source || "Direct / Other",
           notes: data.notes,
         })
         .eq("id", application.id);
@@ -139,6 +140,7 @@ export default function ApplicationDetailsPage({
         assessment_date: data.assessment_date ?? null,
         interview_date: data.interview_date ?? null,
         follow_up_date: data.follow_up_date ?? null,
+        source: data.source ?? "Direct / Other",
         notes: data.notes ?? null,
       });
       setIsEditOpen(false);
@@ -307,10 +309,10 @@ export default function ApplicationDetailsPage({
 
               <div className="rounded-lg bg-muted/30 p-3">
                 <span className="text-xs text-muted-foreground block flex items-center gap-1 mb-1">
-                  <Calendar className="h-3 w-3" /> Application Date
+                  <Share2 className="h-3 w-3" /> Source Channel
                 </span>
                 <span className="font-semibold text-sm text-foreground">
-                  {formatDate(application.application_date)}
+                  {application.source || "Direct / Other"}
                 </span>
               </div>
             </div>

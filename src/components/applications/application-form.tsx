@@ -16,6 +16,17 @@ interface ApplicationFormProps {
   isSubmitting?: boolean;
 }
 
+const COMMON_SOURCES = [
+  "LinkedIn",
+  "Company Career Site",
+  "Referral",
+  "Indeed",
+  "Campus Placement",
+  "Naukri / Job Portal",
+  "Cold Email / Outreach",
+  "Other",
+];
+
 export function ApplicationForm({
   initialData,
   onSubmit,
@@ -36,6 +47,7 @@ export function ApplicationForm({
     assessment_date: initialData?.assessment_date ? initialData.assessment_date.slice(0, 16) : "",
     interview_date: initialData?.interview_date ? initialData.interview_date.slice(0, 16) : "",
     follow_up_date: initialData?.follow_up_date || "",
+    source: initialData?.source || "LinkedIn",
     notes: initialData?.notes || "",
   };
 
@@ -60,6 +72,7 @@ export function ApplicationForm({
         assessment_date: data.assessment_date?.trim() ? new Date(data.assessment_date).toISOString() : null,
         interview_date: data.interview_date?.trim() ? new Date(data.interview_date).toISOString() : null,
         follow_up_date: data.follow_up_date?.trim() ? data.follow_up_date.trim() : null,
+        source: data.source?.trim() ? data.source.trim() : "Direct / Other",
         notes: data.notes?.trim() ? data.notes.trim() : null,
       };
       await onSubmit(normalizedData);
@@ -83,7 +96,7 @@ export function ApplicationForm({
             Company Name <span className="text-destructive">*</span>
           </label>
           <Input
-            placeholder="e.g. Google, Stripe, Local Startup"
+            placeholder="e.g. Google, Zepto, Swiggy, Razorpay"
             {...register("company")}
             aria-invalid={!!errors.company}
           />
@@ -97,7 +110,7 @@ export function ApplicationForm({
             Job Title <span className="text-destructive">*</span>
           </label>
           <Input
-            placeholder="e.g. Junior Software Engineer"
+            placeholder="e.g. Associate Product Manager, Product Analyst"
             {...register("job_title")}
             aria-invalid={!!errors.job_title}
           />
@@ -138,7 +151,7 @@ export function ApplicationForm({
         </div>
       </div>
 
-      {/* Row 3: Application Date & Location */}
+      {/* Row 3: Application Date & Application Source */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block font-medium text-foreground mb-1">
@@ -151,25 +164,40 @@ export function ApplicationForm({
         </div>
 
         <div>
-          <label className="block font-medium text-foreground mb-1">Location</label>
-          <Input placeholder="e.g. Remote, New York, London" {...register("location")} />
+          <label className="block font-medium text-foreground mb-1">Application Source</label>
+          <select
+            {...register("source")}
+            className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            {COMMON_SOURCES.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
-      {/* Row 4: Job URL & Salary */}
+      {/* Row 4: Location & Salary */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block font-medium text-foreground mb-1">Job Post URL</label>
-          <Input placeholder="https://..." {...register("job_url")} />
-          {errors.job_url && (
-            <p className="mt-1 text-xs text-destructive">{errors.job_url.message}</p>
-          )}
+          <label className="block font-medium text-foreground mb-1">Location</label>
+          <Input placeholder="e.g. Bengaluru, Remote, Mumbai, Delhi NCR" {...register("location")} />
         </div>
 
         <div>
-          <label className="block font-medium text-foreground mb-1">Salary Range (Optional)</label>
-          <Input placeholder="e.g. $70,000 - $85,000" {...register("salary")} />
+          <label className="block font-medium text-foreground mb-1">Salary Range / Stipend (Optional)</label>
+          <Input placeholder="e.g. ₹8-12 LPA, ₹40k/month" {...register("salary")} />
         </div>
+      </div>
+
+      {/* Row 5: Job URL */}
+      <div>
+        <label className="block font-medium text-foreground mb-1">Job Post URL</label>
+        <Input placeholder="https://..." {...register("job_url")} />
+        {errors.job_url && (
+          <p className="mt-1 text-xs text-destructive">{errors.job_url.message}</p>
+        )}
       </div>
 
       {/* Critical Milestone Dates Section */}
@@ -206,7 +234,7 @@ export function ApplicationForm({
         <label className="block font-medium text-foreground mb-1">Notes & Follow-up Details</label>
         <textarea
           rows={3}
-          placeholder="Contact recruiter names, referral notes, OA topics, interview preparation links..."
+          placeholder="Recruiter names, referral details, OA topics, case study prep notes..."
           className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           {...register("notes")}
         />
@@ -226,4 +254,3 @@ export function ApplicationForm({
     </form>
   );
 }
-

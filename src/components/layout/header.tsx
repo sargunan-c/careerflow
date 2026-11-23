@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Plus, LayoutDashboard, Briefcase, LogOut } from "lucide-react";
+import { Menu, X, Plus, LayoutDashboard, Briefcase, Sparkles, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,7 @@ export function Header({ onOpenAddModal }: HeaderProps) {
 
   const getPageTitle = () => {
     if (pathname === "/") return "Overview Dashboard";
+    if (pathname.startsWith("/job-intelligence")) return "Job Description Intelligence";
     if (pathname.startsWith("/applications/")) return "Application Details";
     if (pathname.startsWith("/applications")) return "Job Applications Pipeline";
     return "CareerFlow";
@@ -82,6 +83,14 @@ export function Header({ onOpenAddModal }: HeaderProps) {
               <Briefcase className="h-5 w-5 text-primary" />
               <span>Applications Pipeline</span>
             </Link>
+            <Link
+              href="/job-intelligence"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-3 p-3 rounded-lg text-base font-medium hover:bg-muted"
+            >
+              <Sparkles className="h-5 w-5 text-primary" />
+              <span>JD Intelligence</span>
+            </Link>
           </nav>
 
           <div className="border-t pt-4">
@@ -101,4 +110,3 @@ export function Header({ onOpenAddModal }: HeaderProps) {
     </header>
   );
 }
-

@@ -29,7 +29,7 @@ describe("CSV Export Generator", () => {
     const lines = csv.split("\r\n");
 
     expect(lines[0]).toBe(
-      "Company,Job Title,Status,Application Date,Location,Employment Type,Salary Range,Assessment Date,Interview Date,Follow-up Date,Job URL,Notes"
+      "Company,Job Title,Status,Application Date,Location,Employment Type,Salary Range,Source,Assessment Date,Interview Date,Follow-up Date,Job URL,Notes"
     );
   });
 

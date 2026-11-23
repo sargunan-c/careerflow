@@ -5,7 +5,7 @@ import Link from "next/link";
 import { JobApplication, ApplicationStatus, APPLICATION_STATUSES } from "@/types";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { formatDate, formatDateTime } from "@/lib/utils";
-import { ExternalLink, Edit2, Trash2, Calendar, Clock, Eye } from "lucide-react";
+import { ExternalLink, Edit2, Trash2, Calendar, Clock, Eye, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface ApplicationTableProps {
@@ -32,6 +32,7 @@ export function ApplicationTable({
           <tr>
             <th className="py-3 px-4 font-semibold">Company & Role</th>
             <th className="py-3 px-4 font-semibold">Status</th>
+            <th className="py-3 px-4 font-semibold">Source</th>
             <th className="py-3 px-4 font-semibold">Applied</th>
             <th className="py-3 px-4 font-semibold">Key Milestone / Deadline</th>
             <th className="py-3 px-4 font-semibold">Location / Salary</th>
@@ -91,6 +92,13 @@ export function ApplicationTable({
                     </select>
                     <StatusBadge status={app.status} />
                   </div>
+                </td>
+
+                {/* Application Source */}
+                <td className="py-3.5 px-4 text-xs text-muted-foreground whitespace-nowrap">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-muted text-muted-foreground border">
+                    {app.source || "Direct / Other"}
+                  </span>
                 </td>
 
                 {/* Applied Date */}
@@ -161,4 +169,3 @@ export function ApplicationTable({
     </div>
   );
 }
-

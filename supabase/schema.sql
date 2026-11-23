@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS public.applications (
     salary VARCHAR(100),
     employment_type VARCHAR(50) DEFAULT 'Full-time',
     status application_status NOT NULL DEFAULT 'Applied',
+    source VARCHAR(100) DEFAULT 'Direct / Other',
     application_date DATE NOT NULL DEFAULT CURRENT_DATE,
     assessment_date TIMESTAMPTZ,
     interview_date TIMESTAMPTZ,

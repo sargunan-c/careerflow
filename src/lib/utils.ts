@@ -1,6 +1,13 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { JobApplication, DashboardMetrics, ApplicationStatus, APPLICATION_STATUSES } from "@/types";
+import {
+  JobApplication,
+  DashboardMetrics,
+  ApplicationStatus,
+  APPLICATION_STATUSES,
+  ActivityOverTimeItem,
+  SourceBreakdownItem,
+} from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -48,6 +55,14 @@ export function calculateMetrics(applications: JobApplication[]): DashboardMetri
 
   const interviews = applications.filter((app) => app.status === "Interview").length;
   const offers = applications.filter((app) => app.status === "Offer").length;
+  const rejected = applications.filter((app) => app.status === "Rejected").length;
+
+  const interviewConversionRate =
+    total > 0 ? Number(((interviews / total) * 100).toFixed(1)) : 0;
+  const rejectionRate =
+    total > 0 ? Number(((rejected / total) * 100).toFixed(1)) : 0;
+  const offerConversionRate =
+    total > 0 ? Number(((offers / total) * 100).toFixed(1)) : 0;
 
   // Status Distribution
   const counts: Record<ApplicationStatus, number> = {
@@ -72,10 +87,47 @@ export function calculateMetrics(applications: JobApplication[]): DashboardMetri
     percentage: total > 0 ? Math.round((counts[status] / total) * 100) : 0,
   }));
 
+  // Activity over time (chronological by month: e.g. "2026-09", "2026-10")
+  const activityMap = new Map<string, number>();
+  applications.forEach((app) => {
+    if (app.application_date && /^\d{4}-\d{2}/.test(app.application_date)) {
+      const monthKey = app.application_date.slice(0, 7); // "YYYY-MM"
+      activityMap.set(monthKey, (activityMap.get(monthKey) || 0) + 1);
+    }
+  });
+
+  const sortedMonths = Array.from(activityMap.keys()).sort();
+  const activityOverTime: ActivityOverTimeItem[] = sortedMonths.map((monthKey) => {
+    const [year, month] = monthKey.split("-");
+    const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1, 1);
+    const label = !isNaN(date.getTime())
+      ? date.toLocaleDateString("en-US", { month: "short", year: "numeric" })
+      : monthKey;
+    return {
+      period: label,
+      count: activityMap.get(monthKey) || 0,
+    };
+  });
+
+  // Source breakdown
+  const sourceMap = new Map<string, number>();
+  applications.forEach((app) => {
+    const src = app.source && app.source.trim() ? app.source.trim() : "Direct / Other";
+    sourceMap.set(src, (sourceMap.get(src) || 0) + 1);
+  });
+
+  const sourceBreakdown: SourceBreakdownItem[] = Array.from(sourceMap.entries())
+    .map(([source, count]) => ({
+      source,
+      count,
+      percentage: total > 0 ? Math.round((count / total) * 100) : 0,
+    }))
+    .sort((a, b) => b.count - a.count);
+
   const now = new Date();
   now.setHours(0, 0, 0, 0);
 
-  // Upcoming deadlines: assessment or interview date >= today (or within the last 24h)
+  // Upcoming deadlines: assessment or interview date >= today (or valid future date)
   const upcomingDeadlines = applications
     .filter((app) => {
       if (app.status === "Rejected" || app.status === "Withdrawn") return false;
@@ -111,7 +163,12 @@ export function calculateMetrics(applications: JobApplication[]): DashboardMetri
     active,
     interviews,
     offers,
+    interviewConversionRate,
+    rejectionRate,
+    offerConversionRate,
     statusDistribution,
+    activityOverTime,
+    sourceBreakdown,
     upcomingDeadlines,
     pendingFollowUps,
   };
@@ -126,6 +183,7 @@ export function generateCSV(applications: JobApplication[]): string {
     "Location",
     "Employment Type",
     "Salary Range",
+    "Source",
     "Assessment Date",
     "Interview Date",
     "Follow-up Date",
@@ -147,6 +205,7 @@ export function generateCSV(applications: JobApplication[]): string {
     escapeCSV(app.location),
     escapeCSV(app.employment_type),
     escapeCSV(app.salary),
+    escapeCSV(app.source || "Direct / Other"),
     escapeCSV(app.assessment_date),
     escapeCSV(app.interview_date),
     escapeCSV(app.follow_up_date),
@@ -169,4 +228,3 @@ export function downloadCSV(applications: JobApplication[], filename = "careerfl
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 }
-

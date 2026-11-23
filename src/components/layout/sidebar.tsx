@@ -6,8 +6,8 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Briefcase,
-  LogOut,
   Sparkles,
+  LogOut,
   CheckCircle2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,7 @@ import { isSupabaseConfigured } from "@/lib/supabase/status";
 const navItems = [
   { label: "Dashboard", href: "/", icon: LayoutDashboard },
   { label: "Applications", href: "/applications", icon: Briefcase },
+  { label: "JD Intelligence", href: "/job-intelligence", icon: Sparkles },
 ];
 
 export function Sidebar({ className }: { className?: string }) {
@@ -50,7 +51,7 @@ export function Sidebar({ className }: { className?: string }) {
             <div className="flex items-center gap-1.5 font-bold tracking-tight text-base text-foreground">
               CareerFlow
             </div>
-            <p className="text-[11px] text-muted-foreground font-medium">Graduate Job Tracker</p>
+            <p className="text-[11px] text-muted-foreground font-medium">Graduate Job Tracker & PM SaaS</p>
           </div>
         </div>
 
@@ -84,7 +85,7 @@ export function Sidebar({ className }: { className?: string }) {
       <div className="border-t pt-4 space-y-3">
         <div className="px-3 py-2 rounded-lg bg-muted/40 text-xs text-muted-foreground flex items-center gap-2">
           <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
-          <span className="truncate">Active Candidate Workspace</span>
+          <span className="truncate">Candidate Workspace</span>
         </div>
 
         <button
@@ -98,4 +99,3 @@ export function Sidebar({ className }: { className?: string }) {
     </aside>
   );
 }
-

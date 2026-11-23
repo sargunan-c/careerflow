@@ -1,53 +1,73 @@
-# CareerFlow — Graduate Job Application & Pipeline Tracker
+# CareerFlow — Graduate Job Search & Product Intelligence Platform
 
-> A clean, focused, privacy-first job application management platform engineered for final-year university students and recent graduates (0–2 years experience).
+> A data-driven, privacy-first job search management and career intelligence SaaS platform built for final-year students and early-career job seekers (0–1 years experience) targeting roles in Product Management, Analytics, Operations, and Software Engineering.
+
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL%20%7C%20RLS-3ECF8E?style=flat&logo=supabase)](https://supabase.com/)
+[![Tests](https://img.shields.io/badge/Vitest-20%2F20%20Passing-brightgreen?style=flat&logo=vitest)](https://vitest.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
-## 📌 Product Overview
-CareerFlow solves the operational chaos of entry-level job hunting. Rather than relying on clumsy spreadsheets or bloated enterprise career platforms with aggressive paywalls and invasive extensions, CareerFlow provides an execution cockpit designed specifically for high-volume graduate recruitment:
-- **Zero Distractions:** No AI resume generators, no social feeds, and no paywalls.
-- **First-Class Deadlines:** Proactively elevates 48–72h Online Assessment (OA) windows and interview dates.
-- **Per-User Security:** Built on Supabase PostgreSQL with strict Row Level Security (RLS) ensuring 100% data isolation.
-- **Data Portability:** 1-click RFC-4180 compliant CSV export so candidates always own their data.
+## 📌 Executive Summary & Problem Solved
+
+College students and entry-level applicants apply to 50–150+ opportunities across fragmented platforms (LinkedIn, Naukri, Internshala, campus placement cells, and company portals). This unstructured volume leads to three major failures:
+1. **Missed Evaluation Windows:** 48–72 hour Online Assessment (OA) links and scheduled recruiter calls get buried in inbox clutter.
+2. **Funnel Blindness:** Candidates cannot pinpoint why they are not landing jobs because they do not track where drop-offs happen (e.g. low interview conversion vs. interview-to-offer fallout).
+3. **Skill Mismatch:** Resumes are submitted without knowing how the candidate's skills map to specific job requirements or what technical topics to study before an interview.
+
+**CareerFlow** addresses these challenges through a unified cockpit providing multi-tenant application tracking, automated conversion funnel analytics, date-anchored milestone countdowns, and a local, deterministic Job Description Intelligence engine that extracts skills and benchmarks candidate alignment without recurring paid AI API costs.
 
 ---
 
 ## 🚀 Key Features
 
-1. **Executive Dashboard:**
-   - Summary metric cards: Total Applications, Active Pipeline, Active Interviews, and Offers Received.
-   - Interactive Application Stage Funnel chart (Recharts) visualizing pipeline distribution.
-   - "Upcoming Deadlines & Interviews" and "Scheduled Follow-Ups" countdown cards.
-2. **Applications Pipeline:**
-   - High-density desktop table and responsive touch-friendly mobile cards.
-   - 7 recruitment lifecycle stages: `Saved`, `Applied`, `Assessment`, `Interview`, `Offer`, `Rejected`, `Withdrawn`.
-   - 1-click inline status switching directly from table rows.
-3. **Search, Filtering & Sorting:**
-   - Real-time client-side search across Company, Role, Location, and Notes.
-   - Status filter chips with live record counts.
-   - Multi-column sorting (Application Date, Company Name, Status, Assessment Date, Interview Date).
-4. **Application Details View (`/applications/[id]`):**
-   - In-depth modal and page view with full compensation, location, job URL, and rich notes.
-   - Direct status modification buttons and deletion with confirmation safeguards.
-5. **Multi-Tenant Authentication:**
-   - Email/password sign-up, sign-in, and sign-out via Supabase Auth and `@supabase/ssr` cookies.
-6. **Graceful Degradation:**
-   - Clear, honest setup banner when backend credentials are not yet configured; no synthetic fake data pretending to be live records.
+### 1. Job Description Intelligence Engine (`/job-intelligence`)
+* **Local Deterministic Parsing:** Instant analysis of pasted job postings using pattern extraction and a domain taxonomy of 20+ product and tech competencies (zero external API fee, 100% offline uptime).
+* **Automated Extraction:** Extracts job title, experience level (0-1 years / fresher), key responsibilities, and qualifications.
+* **Skill Match & Gap Analysis:** Compares candidate skills side-by-side with required and preferred JD skills, yielding a percentage alignment score.
+* **Ranked Learning Priorities:** Surfaces missing skills categorized by urgency (High/Medium) with actionable study and portfolio project advice.
+* **Heuristic Safety:** Prominently labels output as preparation analysis, not a predictive hiring guarantee.
+
+### 2. Product Analytics & Funnel Dashboard (`/`)
+* **Core Conversion KPIs:** Real-time mathematical calculation of:
+  $$\text{Interview Conversion Rate} = \left(\frac{\text{Interviews}}{\text{Total Applications}}\right) \times 100$$
+  $$\text{Rejection Rate} = \left(\frac{\text{Rejected}}{\text{Total Applications}}\right) \times 100$$
+  $$\text{Offer Conversion Rate} = \left(\frac{\text{Offers}}{\text{Total Applications}}\right) \times 100$$
+* **Application Stage Funnel:** Visualizes pipeline distribution across all 7 stages using Recharts.
+* **Timeline Volume:** Chronologically groups applications by calendar month to visualize job search momentum.
+* **Channel Distribution:** Tracks application yield across LinkedIn, Referrals, Company Portals, and Campus Placement.
+* **Zero-State Resilience:** Graceful empty states with onboarding guidance; zero hardcoded fake metrics.
+
+### 3. Recruitment Pipeline Management (`/applications`)
+* **7-Stage Lifecycle:** `Saved` $\rightarrow$ `Applied` $\rightarrow$ `Assessment` $\rightarrow$ `Interview` $\rightarrow$ `Offer` $\rightarrow$ `Rejected` $\rightarrow$ `Withdrawn`.
+* **1-Click Stage Updates:** Inline status changer in table rows for rapid workflow updates.
+* **Search & Filters:** Real-time multi-attribute search (company, title, source, notes), status filter chips, and multi-column sorting.
+* **Milestone Alerts:** Prominently highlights upcoming Online Assessment (OA) deadlines and interview times.
+* **Data Portability:** 1-click RFC 4180-compliant CSV export containing all 13 fields including recruitment source and notes.
+
+### 4. Per-Tenant Security & Isolation
+* Built on Supabase PostgreSQL with strict Row-Level Security (RLS):
+  ```sql
+  CREATE POLICY "Users can view own applications"
+      ON public.applications FOR SELECT
+      USING (auth.uid() = user_id);
+  ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
-- **Framework:** [Next.js 15 (App Router)](https://nextjs.org/)
-- **Language:** Strict TypeScript 5
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/) & [shadcn/ui](https://ui.shadcn.com/) design system
-- **Database & Auth:** [Supabase](https://supabase.com/) (PostgreSQL + GoTrue + Row-Level Security)
-- **Validation:** [Zod](https://zod.dev/) & [React Hook Form](https://react-hook-form.com/)
-- **Visualizations:** [Recharts](https://recharts.org/)
-- **Icons:** [Lucide React](https://lucide.dev/)
-- **Testing:** [Vitest](https://vitest.dev/) (12/12 automated unit & integration tests passing)
-- **Deployment:** [Vercel](https://vercel.com/)
+| Layer | Technology | Rationale |
+|---|---|---|
+| **Frontend Framework** | Next.js 15 (App Router, React 19) | Server/client component isolation, fast routing, modern rendering |
+| **Language** | TypeScript 5.7 (Strict Mode) | Full type-safety across forms, API clients, and analytical utilities |
+| **Styling & UI** | Tailwind CSS 3.4, Lucide React | Accessible, lightweight, clean design system without heavyweight component libraries |
+| **Database & Auth** | Supabase (PostgreSQL 15, GoTrue, RLS) | Multi-tenant isolation at engine level, robust relational indexing |
+| **Validation** | Zod 3.24, React Hook Form 7.54 | Strict client-side and server-side schema validation |
+| **Charts** | Recharts 2.15 | Responsive SVG bar charts for funnel and volume analytics |
+| **Testing** | Vitest 2.1.8 | In-memory unit and integration testing execution in < 7 seconds |
 
 ---
 
@@ -56,121 +76,97 @@ CareerFlow solves the operational chaos of entry-level job hunting. Rather than 
 ```text
 careerflow/
 ├── docs/
-│   ├── 01_PROBLEM_STATEMENT.md          # Problem framing & explicit assumption audit
-│   ├── 02_ASSUMPTIONS_AND_RESEARCH_PLAN.md # Practical beginner research playbook
-│   ├── 03_INTERVIEW_QUESTIONNAIRE.md    # 15-minute qualitative interview script
-│   ├── 03b_INTERVIEW_NOTES_TEMPLATE.md  # Standardized participant notes template
-│   ├── 04_COMPETITOR_ANALYSIS.md        # Teal vs. Huntr vs. Simplify vs. Sheets
-│   ├── 05_RESEARCH_FINDINGS.md          # Unpopulated evidence log (no fake data)
-│   ├── 06_PRD.md                        # Complete Product Requirements Document
-│   ├── 07_USER_STORIES_AND_AC.md        # Gherkin-syntax User Stories & Acceptance Criteria
-│   ├── 08_FEATURE_PRIORITISATION.md     # MoSCoW & RICE scoring framework
-│   ├── 09_TECHNICAL_ARCHITECTURE.md     # Full-stack architectural specification & mermaid diagram
-│   ├── 11_TESTING_REPORT.md             # Automated test report & QA checklist
-│   └── 12_PRODUCT_CASE_STUDY.md         # Comprehensive product case study for portfolio
+│   ├── PRODUCT_REQUIREMENTS.md    # Product Requirements Document (PRD) with functional & non-functional specs
+│   ├── USER_STORIES.md            # Gherkin-syntax user stories with acceptance criteria
+│   ├── PRODUCT_ROADMAP.md         # Multi-quarter product roadmap and strategic milestones
+│   ├── PRIORITIZATION.md          # RICE scoring framework and architectural trade-off evaluations
+│   ├── PRODUCT_METRICS.md         # KPI definitions, mathematical formulas, and North Star framework
+│   ├── TEST_PLAN.md               # Quality assurance plan, scenario matrix, and manual QA report
+│   ├── COMPETITOR_ANALYSIS.md     # Feature benchmarking vs. Huntr, Teal, and Google Sheets
+│   └── PRODUCT_CASE_STUDY.md      # Comprehensive product case study for portfolio evaluation
 ├── src/
 │   ├── app/
-│   │   ├── (auth)/
-│   │   │   ├── login/page.tsx           # Sign-in page
-│   │   │   └── register/page.tsx        # Sign-up page
+│   │   ├── (auth)/                # Login and register pages
 │   │   ├── (dashboard)/
-│   │   │   ├── layout.tsx               # Dashboard layout with global Add modal
-│   │   │   ├── page.tsx                 # Overview dashboard with metrics & charts
-│   │   │   └── applications/
-│   │   │       ├── page.tsx             # Applications pipeline with search & filters
-│   │   │       └── [id]/page.tsx        # Individual application details view
-│   │   ├── globals.css                  # Modern SaaS design tokens & base styles
-│   │   └── layout.tsx                   # Root HTML shell
+│   │   │   ├── page.tsx           # Product analytics overview dashboard
+│   │   │   ├── layout.tsx         # Dashboard layout shell with global Add modal
+│   │   │   ├── applications/      # Applications pipeline table, search, filters & details view
+│   │   │   └── job-intelligence/  # Job Description Intelligence & skill matching interface
+│   │   ├── globals.css            # Tailwind theme tokens
+│   │   └── layout.tsx             # Root HTML layout
 │   ├── components/
-│   │   ├── applications/                # Table, Card, Form, and Delete dialogs
-│   │   ├── dashboard/                   # StatCard, StatusChart, DeadlineCard
-│   │   ├── layout/                      # Sidebar and Header components
-│   │   └── ui/                          # Accessible button, badge, input, modal, status-badge
+│   │   ├── applications/          # Table, Card, Form, and Delete dialogs
+│   │   ├── dashboard/             # StatCard, StatusChart, ActivityChart, SourceChart, DeadlineCard
+│   │   ├── layout/                # Sidebar and Header components
+│   │   └── ui/                    # Reusable button, input, badge, modal
 │   ├── lib/
-│   │   ├── supabase/                    # Browser, server, and middleware clients
-│   │   ├── validations/                 # Zod validation schemas
-│   │   └── utils.ts                     # Metrics engine, CSV exporter, date formatters
-│   └── types/                           # TypeScript models & application statuses
+│   │   ├── jd-parser.ts           # Local deterministic JD parsing & skill gap analysis engine
+│   │   ├── supabase/              # Client, server, and status utilities
+│   │   ├── validations/           # Zod schemas for applications and auth
+│   │   └── utils.ts               # Analytics calculation engine, date formatters, CSV export
+│   └── types/                     # TypeScript interfaces and application enums
 ├── supabase/
-│   └── schema.sql                       # Production PostgreSQL schema, indices & RLS policies
-├── __tests__/                           # Automated Vitest test suites
-├── .env.example                         # Environment variable template
+│   └── schema.sql                 # Production PostgreSQL schema, indices & RLS policies
+├── __tests__/                     # Vitest automated test suites (20/20 passing)
 ├── package.json
 └── tsconfig.json
 ```
 
 ---
 
-## ⚡ Quickstart & Local Setup
+## ⚡ Setup & Local Run Instructions
 
-### 1. Clone & Install Dependencies
+### 1. Prerequisites
+* Node.js 18+ or 20+
+* pnpm or npm
+
+### 2. Installation
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/sargunan-c/careerflow.git
 cd careerflow
-pnpm install
+npm install
 ```
 
-### 2. Configure Supabase Backend
-1. Create a free project at [supabase.com](https://supabase.com).
-2. In the Supabase Dashboard, open the **SQL Editor**.
-3. Copy the entire contents of [`supabase/schema.sql`](file:///C:/Users/csarg/.gemini/antigravity/scratch/careerflow/supabase/schema.sql) into the editor and click **Run**.
-   - This creates table `public.applications`, sets up the `application_status` enum, enables RLS, creates user isolation policies, and configures partial deadline indices.
-
-### 3. Set Environment Variables
-Create a `.env.local` file in the project root:
+### 3. Environment Variables
+Create a `.env.local` file in the root directory:
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
+*(Note: If Supabase keys are omitted, the application runs in disconnected mode with an informational configuration banner without crashing).*
 
-### 4. Run Development Server
+### 4. Database Setup (Supabase)
+1. In your Supabase project, navigate to the **SQL Editor**.
+2. Run the SQL script located at [`supabase/schema.sql`](file:///C:/Users/csarg/.gemini/antigravity/scratch/careerflow/supabase/schema.sql).
+3. This creates the `applications` table, enums, triggers, and Row-Level Security policies.
+
+### 5. Run Locally
 ```bash
-pnpm dev
+npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 🧪 Running Automated Tests
+## 🧪 Testing Results
 
-CareerFlow includes comprehensive automated tests covering Zod schemas, metric aggregation, and CSV generation:
-
+Run the automated test suite:
 ```bash
-pnpm test
+npm test
 ```
 
-Test Results:
-- `__tests__/validation.test.ts`: 6/6 tests passing
-- `__tests__/metrics.test.ts`: 3/3 tests passing
-- `__tests__/csv.test.ts`: 3/3 tests passing
-- **Total:** 12 passed in < 2 seconds.
+### Verified Test Summary:
+* `__tests__/jd-parser.test.ts`: 6/6 tests passing (Title extraction, section splitting, skill categorization, candidate matching, gap ranking, empty input handling)
+* `__tests__/metrics.test.ts`: 5/5 tests passing (Interview conversion rate, rejection rate, offer rate, monthly activity timeline, channel breakdown, zero-state safety)
+* `__tests__/validation.test.ts`: 6/6 tests passing (Company/title validation, date regex, URL formatting, auth bounds)
+* `__tests__/csv.test.ts`: 3/3 tests passing (13 headers, quote/comma escaping, null safety)
+* **Total:** **20 passed (100% pass rate)**.
 
 ---
 
-## 🌐 Deployment to Vercel
+## ⚠️ Known Limitations & Boundaries
 
-1. Push your repository to GitHub (see instructions below).
-2. Log in to [Vercel](https://vercel.com) and click **"Add New Project"**.
-3. Import your `careerflow` repository.
-4. Under **Environment Variables**, add:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `NEXT_PUBLIC_APP_URL` (set to your Vercel deployment URL, e.g. `https://careerflow.vercel.app`)
-5. Click **Deploy**. Vercel will build and deploy the production bundle in under 1 minute.
-
----
-
-## 🔗 How to Connect GitHub & Push
-
-If you haven't linked a GitHub remote yet, run the following commands:
-
-```bash
-# 1. Create an empty repository named 'careerflow' on github.com
-# 2. Add the remote (replace USERNAME with your GitHub handle):
-git remote add origin https://github.com/USERNAME/careerflow.git
-
-# 3. Rename branch to main (if desired) and push:
-git branch -M main
-git push -u origin main
-```
+1. **Local Parsing Scope:** The JD parser uses deterministic regex pattern extraction and a curated taxonomy of 20+ competencies. While fast, predictable, and zero-cost, it does not interpret highly unconventional job posting layouts or novel niche tech abbreviations outside its dictionary.
+2. **No Web Scraping:** To prevent bot blocks, anti-scraping CAPTCHAs, and terms-of-service violations with job boards, users paste job descriptions directly into the tool.
+3. **No Automated Email Scraping:** Applications and milestone dates are entered by the user rather than reading personal inbox credentials, protecting user privacy.

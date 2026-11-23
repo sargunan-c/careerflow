@@ -19,7 +19,6 @@ import {
   Download,
   Filter,
   ArrowUpDown,
-  Plus,
   Loader2,
   Briefcase,
 } from "lucide-react";
@@ -126,6 +125,7 @@ export default function ApplicationsPipelinePage() {
           assessment_date: data.assessment_date,
           interview_date: data.interview_date,
           follow_up_date: data.follow_up_date,
+          source: data.source || "Direct / Other",
           notes: data.notes,
         })
         .eq("id", editingApp.id);
@@ -182,7 +182,8 @@ export default function ApplicationsPipelinePage() {
           const matchTitle = app.job_title.toLowerCase().includes(q);
           const matchLocation = (app.location || "").toLowerCase().includes(q);
           const matchNotes = (app.notes || "").toLowerCase().includes(q);
-          return matchCompany || matchTitle || matchLocation || matchNotes;
+          const matchSource = (app.source || "").toLowerCase().includes(q);
+          return matchCompany || matchTitle || matchLocation || matchNotes || matchSource;
         }
 
         return true;
@@ -212,10 +213,10 @@ export default function ApplicationsPipelinePage() {
           <div className="relative w-full sm:w-80">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search company, title, notes..."
+              placeholder="Search company, title, source, notes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
+              className="pl-9 text-xs"
             />
           </div>
 
@@ -359,7 +360,7 @@ export default function ApplicationsPipelinePage() {
         isOpen={!!editingApp}
         onClose={() => setEditingApp(null)}
         title="Edit Job Application"
-        description="Update company information, recruitment stage, or scheduled deadlines."
+        description="Update company information, recruitment stage, source, or scheduled deadlines."
       >
         {editingApp && (
           <ApplicationForm
@@ -382,4 +383,3 @@ export default function ApplicationsPipelinePage() {
     </div>
   );
 }
-

@@ -49,6 +49,7 @@ export default function DashboardLayout({
         assessment_date: data.assessment_date,
         interview_date: data.interview_date,
         follow_up_date: data.follow_up_date,
+        source: data.source || "Direct / Other",
         notes: data.notes,
       });
 
@@ -93,4 +94,3 @@ export default function DashboardLayout({
     </div>
   );
 }
-

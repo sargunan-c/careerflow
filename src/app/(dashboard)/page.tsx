@@ -8,6 +8,8 @@ import { JobApplication, DashboardMetrics } from "@/types";
 import { calculateMetrics } from "@/lib/utils";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { StatusChart } from "@/components/dashboard/status-chart";
+import { ActivityChart } from "@/components/dashboard/activity-chart";
+import { SourceChart } from "@/components/dashboard/source-chart";
 import { DeadlineCard } from "@/components/dashboard/deadline-card";
 import { SupabaseConfigBanner } from "@/components/ui/supabase-config-banner";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -19,9 +21,12 @@ import {
   Award,
   Video,
   ArrowRight,
-  PlusCircle,
   Loader2,
   ExternalLink,
+  Target,
+  Percent,
+  XCircle,
+  Sparkles,
 } from "lucide-react";
 
 export default function DashboardOverviewPage() {
@@ -98,8 +103,8 @@ export default function DashboardOverviewPage() {
 
       {!loading && (
         <>
-          {/* Top Row: Metrics Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Top Row: Core Conversion Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             <StatCard
               title="Total Applications"
               value={metrics.total}
@@ -110,49 +115,84 @@ export default function DashboardOverviewPage() {
             <StatCard
               title="Active Pipeline"
               value={metrics.active}
-              description="Saved, applied, or in interview"
+              description="In review or interview stages"
               icon={TrendingUp}
               variant="primary"
             />
             <StatCard
-              title="Interviews"
-              value={metrics.interviews}
-              description="Current active interview stage"
+              title="Interview Rate"
+              value={`${metrics.interviewConversionRate}%`}
+              description={`${metrics.interviews} interviews reached`}
               icon={Video}
               variant="purple"
             />
             <StatCard
-              title="Offers Received"
+              title="Rejection Rate"
+              value={`${metrics.rejectionRate}%`}
+              description="Closed without an offer"
+              icon={XCircle}
+              variant="amber"
+            />
+            <StatCard
+              title="Offers Secured"
               value={metrics.offers}
-              description="Job offers secured"
+              description={`${metrics.offerConversionRate}% total conversion`}
               icon={Award}
               variant="emerald"
             />
           </div>
 
-          {/* Middle Row: Funnel Chart & Key Milestones */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-3">
-              <StatusChart data={metrics.statusDistribution} />
+          {/* Quick Action / Feature Promotion Card */}
+          <div className="rounded-xl border bg-gradient-to-r from-blue-50/50 via-card to-purple-50/30 dark:from-blue-950/20 dark:via-card dark:to-purple-950/20 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-lg bg-primary text-primary-foreground">
+                <Sparkles className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-sm text-foreground">
+                  Job Description Intelligence Tool
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  Paste any job description to instantly extract required skills, experience expectations, and compare your profile match.
+                </p>
+              </div>
             </div>
+            <Link href="/job-intelligence" className="shrink-0">
+              <Button size="sm" className="gap-1.5 text-xs">
+                Launch JD Analyzer <ArrowRight className="h-3.5 w-3.5" />
+              </Button>
+            </Link>
           </div>
 
-          {/* Deadlines & Follow-ups */}
-          <DeadlineCard
-            deadlines={metrics.upcomingDeadlines}
-            followUps={metrics.pendingFollowUps}
-          />
+          {/* Middle Row: Funnel Chart & Application Activity Timeline */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <StatusChart data={metrics.statusDistribution} />
+            <ActivityChart data={metrics.activityOverTime} />
+          </div>
+
+          {/* Source Breakdown & Upcoming Milestones */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-1">
+              <SourceChart data={metrics.sourceBreakdown} />
+            </div>
+            <div className="lg:col-span-2">
+              <DeadlineCard
+                deadlines={metrics.upcomingDeadlines}
+                followUps={metrics.pendingFollowUps}
+              />
+            </div>
+          </div>
 
           {/* Recent Applications Preview */}
           <div className="rounded-xl border bg-card p-6 shadow-xs space-y-4">
             <div className="flex items-center justify-between border-b pb-4">
               <div>
-                <h3 className="font-semibold text-foreground text-base">Recent Activity</h3>
-                <p className="text-xs text-muted-foreground">Latest applications in your pipeline</p>
+                <h3 className="font-semibold text-foreground text-base">Recent Pipeline Activity</h3>
+                <p className="text-xs text-muted-foreground">Latest job applications in your database</p>
               </div>
               <Link href="/applications">
                 <Button variant="ghost" size="sm" className="gap-1 text-xs">
-                  View All <ArrowRight className="h-3.5 w-3.5" />
+                  View All Applications <ArrowRight className="h-3.5 w-3.5" />
                 </Button>
               </Link>
             </div>
@@ -194,6 +234,11 @@ export default function DashboardOverviewPage() {
                             <ExternalLink className="h-3 w-3" />
                           </a>
                         )}
+                        {app.source && (
+                          <span className="text-[10px] font-medium bg-muted text-muted-foreground px-2 py-0.5 rounded border">
+                            {app.source}
+                          </span>
+                        )}
                       </div>
                       <p className="text-xs text-muted-foreground">{app.job_title}</p>
                     </div>
@@ -214,4 +259,3 @@ export default function DashboardOverviewPage() {
     </div>
   );
 }
-

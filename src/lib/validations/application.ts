@@ -45,6 +45,7 @@ export const applicationSchema = z.object({
     .or(z.literal(""))
     .optional()
     .nullable(),
+  source: z.string().trim().max(100, "Source cannot exceed 100 characters").optional().nullable(),
   notes: z.string().max(2000, "Notes cannot exceed 2000 characters").optional().nullable(),
 });
 
@@ -56,4 +57,3 @@ export const authSchema = z.object({
 });
 
 export type AuthFormData = z.infer<typeof authSchema>;
-

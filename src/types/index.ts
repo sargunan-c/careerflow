@@ -34,18 +34,41 @@ export interface JobApplication {
   interview_date: string | null; // ISO string
   follow_up_date: string | null; // YYYY-MM-DD
   notes: string | null;
+  source?: string | null; // e.g. LinkedIn, Referral, Company Site, Job Board, Campus
   created_at: string;
   updated_at: string;
 }
 
 export type ApplicationInput = Omit<JobApplication, "id" | "user_id" | "created_at" | "updated_at">;
 
+export interface StatusDistributionItem {
+  status: ApplicationStatus;
+  count: number;
+  percentage: number;
+}
+
+export interface ActivityOverTimeItem {
+  period: string; // e.g. "2026-10", "Oct 2026"
+  count: number;
+}
+
+export interface SourceBreakdownItem {
+  source: string;
+  count: number;
+  percentage: number;
+}
+
 export interface DashboardMetrics {
   total: number;
   active: number;
   interviews: number;
   offers: number;
-  statusDistribution: { status: ApplicationStatus; count: number; percentage: number }[];
+  interviewConversionRate: number; // (interviews / total) * 100
+  rejectionRate: number; // (rejected / total) * 100
+  offerConversionRate: number; // (offers / total) * 100
+  statusDistribution: StatusDistributionItem[];
+  activityOverTime: ActivityOverTimeItem[];
+  sourceBreakdown: SourceBreakdownItem[];
   upcomingDeadlines: JobApplication[];
   pendingFollowUps: JobApplication[];
 }
@@ -57,3 +80,23 @@ export interface ApplicationFilters {
   sortOrder: "asc" | "desc";
 }
 
+export interface LearningPriority {
+  skill: string;
+  priority: "High" | "Medium" | "Low";
+  actionableAdvice: string;
+}
+
+export interface JDAnalysisResult {
+  jobTitle: string;
+  experienceLevel: string;
+  keyRequirements: string[];
+  keyResponsibilities: string[];
+  requiredSkills: string[];
+  preferredSkills: string[];
+  candidateSkills: string[];
+  matchedSkills: string[];
+  missingSkills: string[];
+  matchScore: number;
+  learningPriorities: LearningPriority[];
+  disclaimer: string;
+}
